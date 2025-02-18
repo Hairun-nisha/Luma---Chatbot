@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            background-image: url(header-chat-box.png); /* Add your image file path here */
+    background-size: 120%; /* Ensures the image covers the entire screen */
+    background-position: center; /* Centers the image */
+    background-attachment: fixed;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .chat-container {
+            max-width: 600px;
+            flex: 1;
+            margin: 50px auto;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: rgba(255, 255, 255, 0.8); /* White color with transparency (0.8) */
+            padding: 10px;
+            margin-top: 90px;
+        }
+        
+
+        .header {
+            padding: 10px;
+            background-color: #248cae;
+            border-bottom: 1px solid #248cae;
+            text-align: center;
+            color: #fff;
+            font-size: large;
+            font-weight: bold;
+        }
+
+        .chat-box {
+            padding: 10px;
+            height: 300px;
+            overflow-y: auto;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .chat-box p {
+            margin: 5px 0;
+            padding: 8px;
+            border-radius: 5px;
+        }
+
+        .user-message {
+            background-color: #66a7ec;
+            text-align: right;
+            color: black;
+        }
+
+        .bot-message {
+            background-color: #384c9c;
+            text-align: left;
+            color: white;
+        }
+
+        .input-container {
+            display: flex;
+            align-items: center;
+            padding-top: 10px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            outline: none;
+        }
+
+        button {
+            margin-left: 10px;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 10px;
+            background-color: #2150a1;
+            cursor: pointer;
+            color: #fff;
+            font-weight: bold;
+        }
+        footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background-color: #248cae;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 20px; /* Space between footer content and chat container */
+        }
+        
+        .footer-content p {
+            margin: 5px;
+            font-size: 16px;
+        }
+        h2{
+            color: #248cae;
+            margin-top: 190px;
+            font-style: italic;
+            text-align: center;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 30px;color: white;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+        h2:hover {
+            transform: scale(1.1);
+            color: white;
+        }
+        
+        
+    </style>
+</head>
+<body>
+    <h2 style="text-align: center">Luma - Your Friendly Companion</h2>
+    <div class="chat-container">
+        <div class="header">Chatbot</div>
+        <div id="chat-box" class="chat-box"></div>
+        <div class="input-container">
+            <input type="text" id="user-input" placeholder="Type a message..." onkeypress="handleKeyPress(event)">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Luma Chatbot. All rights reserved.</p>
+            <p>Designed by Nisha</p>
+        </div>
+    </footer>
+    
+
+    <script>
+        function sendMessage() {
+            let inputField = document.getElementById("user-input");
+            let message = inputField.value.trim();
+            if (message === "") return;
+
+            let chatBox = document.getElementById("chat-box");
+
+            // Create user message element
+            let userMessage = document.createElement("p");
+            userMessage.className = "user-message";
+            userMessage.innerHTML = `<strong>You:</strong> ${message}`;
+            chatBox.appendChild(userMessage);
+
+            inputField.value = "";
+
+            setTimeout(() => {
+                let botResponse = getBotResponse(message);
+                let botMessage = document.createElement("p");
+                botMessage.className = "bot-message";
+                botMessage.innerHTML = `<strong>Luma:</strong> ${botResponse}`;
+                chatBox.appendChild(botMessage);
+
+                // Scro👋ll to the latest message
+                botMessage.scrollIntoView({ behavior: "smooth" });
+            }, 500);
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === "Enter") {
+                sendMessage();
+            }
+        }
+
+        function getBotResponse(input) {
+            input = input.trim().toLowerCase(); // Normalize input
+            
+            const responses = {
+                "hi": "Hello! How can I assist you?",
+                "hello": "Hi there! How can I help?",
+                "how are you": "Hey! Thanks for asking! I'm good 🤗, What about you?",
+                "what's your name": "I'm Luma!🤖",
+                "bye": "Goodbye! 👋 Have a great day!",
+                "i'm fine": "That's good to hear! How can I assist you today?",
+                "thanks": "You're welcome! 🤝",
+                "what is the meaning of life": "Life’s meaning? 😆 Just create your own, because the universe was like, ‘You’re on your own, buddy!’ 🏃‍♂️",
+                "what is the time": `Current time is ${new Date().toLocaleTimeString()}.`,
+                "what is the date": `Today's date is ${new Date().toLocaleDateString()}.`,
+                "who are you": "I'm Luma, your friendly chatbot!",
+                "what can you do": "I can provide you with the current date and time. Then I can answer some of your questions.",
+                "what is your purpose": "I'm here to assist you with any questions you may have.",
+                "favorite color": "I'm a chatbot, I don't have a favorite color, But now I'm feeling blue 😄, What's your favorite color?",
+                "date": `Today's date is ${new Date().toLocaleDateString()}.`,
+                "time": `Current time is ${new Date().toLocaleTimeString()}.`,
+                "favorite food": "Food😅? Nah, I just consume bits and bytes! 🍔💻",
+                "watcha doin": "Just chatting with you! 👨‍💻",
+                "i like blue": "Wow thats great! Blue is a nice color 😄",
+                "what are you doing": "Just chatting with you! 👨‍💻",
+                "what's up": "Not much, just chatting with you! 👨‍💻",
+                "sing me a song": "🎶 Twinkle, twinkle, little star… Oh wait, I don’t have a voice! 🧐",
+                "where are you from": "I'm from the land of endless curiosity. You’ll have to guess!😉",
+                "How do you handle difficult situations?": "With the grace of a cat falling off a table—panic first, recover later. 🐱🙂",
+                "summer or winter?": "I prefer air-conditioned data centers. 🌬️💾",
+                "ok how old are you": "I’m ageless, buddy 😎! But I’m definitely old enough to know how to have some fun."
+            };
+        
+            // Check if any key is included in input
+            for (let key in responses) {
+                if (input.includes(key)) {
+                    return responses[key];
+                }
+            }
+            
+            return "I'm not sure how to respond to that.";
+        }
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Login</h2>
+        <input type="text" id="login-username" placeholder="Username" required>
+        <input type="password" id="login-password" placeholder="Password" required>
+        <button onclick="login()">Login</button>
+        <p><a href="signup.html">Sign Up</a> | <a href="forget.html">Forgot Password?</a></p>
+    </div>
+    <script>
+        function login() {
+            let username = document.getElementById("login-username").value;
+            let password = document.getElementById("login-password").value;
+        
+            if (!username || !password) {
+                alert("Please enter both username and password!");
+                return;
+            }
+        
+            let users = JSON.parse(localStorage.getItem("users")) || [];
+            let validUser = users.find(user => user.username === username && user.password === password);
+        
+            if (validUser) {
+                alert("Login successful!");
+                window.location.href = "index.html"; // Redirect to index.html
+            } else {
+                alert("Invalid username or password.");
+            }
+        }
+        
+    </script>
+</body>
+</html>
