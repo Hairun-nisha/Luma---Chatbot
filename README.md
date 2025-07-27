@@ -1,2 +1,2 @@
-# Luma---Chatbot
+#Chatbot
 Luma - Your Friendly Companion An interactive chatbot with HTML, CSS, and JavaScript, featuring smooth hover effects, dynamic transitions, and a responsive design.  🔹 Features: ✅ Smooth hover effects ✅ Clean UI with custom borders ✅ JavaScript interactivity ✅ Responsive design
